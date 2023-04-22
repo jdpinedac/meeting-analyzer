@@ -1,0 +1,91 @@
+repos:
+  # TODO: Pinpoint the versions to SHAs instead of tags
+  - repo: https://github.com/pypa/pip-audit
+    rev: v2.4.14
+    hooks:
+      - id: pip-audit
+        args: [
+          -r, ./.agnostic_devcontainer/requirements.txt,
+          --ignore-vuln, GHSA-h39q-95q5-9jfp,
+          --ignore-vuln, GHSA-f85h-23mf-2fwh,
+          --ignore-vuln, GHSA-x7jh-595q-wq82,
+          --ignore-vuln, GHSA-vp9j-rghq-8jhh
+        ]
+  # - repo: https://github.com/terraform-docs/terraform-docs
+  #   rev: v0.16.0
+  #   hooks:
+  #     - id: terraform-docs-go
+  #       args:
+  #         [markdown, table, --output-file, README.md, ./terraform/modules/data/]
+  # - repo: https://github.com/antonbabenko/pre-commit-terraform
+  #   rev: v1.74.1
+  #   hooks:
+  #     - id: terraform_checkov
+  #       args:
+  #         - --args=-d ./terraform/modules/data
+  #     - id: terraform_tfsec
+  #       files: ^terraform/modules/data/
+  # - repo: https://github.com/gruntwork-io/pre-commit
+  #   rev: v0.1.17
+  #   hooks:
+  #     - id: terragrunt-hclfmt
+  #     - id: terraform-validate
+  #       args:
+  #         - ./terraform/modules/data
+  #     - id: terraform-fmt
+  #       args:
+  #         - -check
+  #         - ./terraform/modules/data
+  - repo: https://github.com/pecigonzalo/pre-commit-shfmt
+    rev: v2.1.0
+    hooks:
+      - id: shell-fmt-go
+        args:
+          - -l
+          - ./.agnostic_devcontainer/entrypoint.sh
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint
+        args:
+          - --ignore
+          - SC1091
+          - --ignore
+          - SC2086
+          - --ignore
+          - DL3059
+          - ./.agnostic_devcontainer/Dockerfile
+  - repo: https://github.com/IamTheFij/docker-pre-commit
+    rev: v2.1.1
+    hooks:
+      - id: docker-compose-check
+        args:
+          - ./.agnostic_devcontainer/docker-compose.yml
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v4.4.0
+  #   hooks:
+  #     - id: check-json
+  #     - id: pretty-format-json
+  #       args: [--autofix, ./terraform/modules/data/definitions/dashboard.json]
+  # - repo: https://github.com/python-jsonschema/check-jsonschema
+  #   rev: 0.21.0
+  #   hooks:
+  #     - id: check-jsonschema
+  #       files: ^terraform/modules/data/definitions/dashboard\.json$
+  #       args:
+  #         [
+  #           --schemafile,
+  #           https://gist.githubusercontent.com/tnavarrom/02f8e730b2adf0866a2a102ab4ea97a9/raw/f258a04965664276430cb96e1e0c14b7591d44fa/aws-cw-dashboard.json,
+  #         ]
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.17.0
+    hooks:
+      - id: yamllint
+        args: [-c=./.config/.yamllint]
+  - repo: https://github.com/lovesegfault/beautysh
+    rev: v6.2.1
+    hooks:
+      - id: beautysh
+        args:
+          - ./.agnostic_devcontainer/.bashrc
+          - ./.agnostic_devcontainer/entrypoint.sh

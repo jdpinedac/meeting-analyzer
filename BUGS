@@ -1,0 +1,4 @@
+# BUGS
+
+- After `docker-compose down`, the container is returning error code 137.
+- Bug on `.gitconfig` file with docker-compose when mounting the file without the `:ro` option, git commit or git config won't work and will show an error of "file already in use"

@@ -1,0 +1,46 @@
+# Agnostic Development Environment
+# USE:
+#   to turn on editing .env file: docker-compose up --build -d
+#   To turn on without editing .env file: PROJ_NAME=$(basename ${PWD}) DOCKER_USER=${USER} \
+#                                           docker-compose up --build -d
+#   to turn off: docker-compose down
+
+version: '3.8'
+services:
+  dev_env:
+    environment:
+      - PROJ_NAME
+    container_name: ${PROJ_NAME}_cont
+    hostname: ${PROJ_NAME}_cont
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VARIANT=${VARIANT}
+        - WORKDIR=${WORKDIR}
+        - PROJ_NAME=${PROJ_NAME}
+        - OS_IMG=${OS_IMG}
+        - DOCKER_USER=${DOCKER_USER}
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+        - BIN_DIR=${BIN_DIR}
+        - PIP_VERSION=${PIP_VERSION}
+        - HADOLINT_VERSION=${HADOLINT_VERSION}
+        - SHELLCHECK_VERSION=${SHELLCHECK_VERSION}
+        - SHFMT_VERSION=${SHFMT_VERSION}
+    volumes:
+      - ..:/${WORKDIR}/${PROJ_NAME}:rw
+      - ${HOME}/.gitconfig:/home/${DOCKER_USER}/.gitconfig:ro
+      - ${HOME}/.aws:/home/${DOCKER_USER}/.aws:rw
+      - ${HOME}/.ssh:/home/${DOCKER_USER}/.ssh:rw
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: "no"

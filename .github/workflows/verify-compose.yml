@@ -1,0 +1,15 @@
+name: Docker Image CI
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Verify docker compose success
+        run: docker compose -f .agnostic_devcontainer/docker-compose.yml up --build -d
+      - name: Stops docker compose
+        run: docker compose -f .agnostic_devcontainer/docker-compose.yml down
