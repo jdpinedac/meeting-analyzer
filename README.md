@@ -1,4 +1,59 @@
-# agnostic-devenv
+# meeting-analyzer
+
+This project is a Python-based software tool that allows users to transcribe audio to text and extract relevant information using the Whisper and ChatGPT APIs from OpenAI. The software is designed to be highly efficient and can leverage NVIDIA co-processors to accelerate processing times. Additionally, it contains a development container that can be used to easily set up the development environment.
+
+## Requirements
+
+- Python 3.x
+- NVIDIA GPU with CUDA support
+- NVIDIA cuDNN library
+- Whisper API key
+- ChatGPT API key
+- Docker (if using development container)
+- Docker version >= 23.0.2
+- docker-compose-plugin version >= 2.17.2-1~ubuntu.22.04~jammy
+- Linux Kernel >= 5.4.0
+
+## Installation
+
+1. Clone the repository to your local machine.
+2. Install the required Python packages using pip:
+
+    ``` shell
+    pip install -r requirements.txt
+    ```
+
+3. Set up your Whisper and ChatGPT API keys in the config.py file.
+4. (Optional) If you have an NVIDIA GPU with CUDA support, you can enable acceleration by setting use_gpu=True in the config.py file.
+5. Run the software using the following command:
+
+## Development Container
+
+This project contains a development container that can be used to easily set up the development environment. To use it, simply navigate to the .agnostic_devcontainer folder and run the following command:
+
+``` shell
+docker-compose up --build
+```
+
+If you are using VSCode, you can also use the development container by opening the repository with VSCode and reopening it as a devcontainer.
+
+## Usage
+
+Once the software is running, it will prompt you to provide the path to the audio file you wish to transcribe and analyze. Once the audio has been processed, the software will output a transcript of the audio along with any relevant information extracted using the ChatGPT API.
+
+## Acknowledgements
+
+This software was built using the following technologies:
+
+- Whisper API from OpenAI [https://openai.com/](https://openai.com/)
+- ChatGPT API from OpenAI [https://openai.com/](https://openai.com/)
+- NVIDIA CUDA and cuDNN libraries [https://developer.nvidia.com/cuda-toolkit](https://developer.nvidia.com/cuda-toolkit), [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/cudnn)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
 
 A containerized development environment inspired by Visual Studio Code devcontainers. It includes all the development tools used in Pyxis InfraAWS.
 
@@ -13,12 +68,6 @@ This strategy is very striking because it not only saves us configuration time, 
 Unfortunately Microsoft's devcontainers approach is only compatible with its VSCode text editor, since it uses its own docker images, with its own configurations and also uses internally the editor's own configuration mechanisms, such is the case of the .devcontainer/devcontainer.json and .devcontainer/Dockerfile files that show the high coupling that these files have with Microsoft's editor.
 
 This is why this project tries to solve the problem by making available a template with an agnostic development environment, where following the best development practices the tools that we use on a daily basis and that we might need in an Infrastructure as Code or Configuration as Code development project are installed, including linters, debuggers, among other tools such as text editors. The project includes both the agnostic development environment and the equivalent using vscode devcontainers.
-
-## Requirements
-
-- Docker version >= 23.0.2
-- docker-compose-plugin version >= 2.17.2-1~ubuntu.22.04~jammy
-- Linux Kernel >= 5.4.0
 
 > Note that the `docker-compose` command is different from `docker compose` (the dash between the words), the former is a command, while the latter is a docker plugin. In our case we use the docker plugin, which you can install from the official Docker repositories.
 
