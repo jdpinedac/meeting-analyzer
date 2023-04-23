@@ -38,23 +38,6 @@ import argparse
 import torch
 import whisper
 
-# import sys
-# import openai
-# import requests
-# from typing import Tuple
-
-# OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY") or sys.argv[1]
-
-# openai.api_key = OPENAI_API_KEY
-
-# class AudioTranscription:
-#     def __init__(self, api_key: str):
-#         self.api_key = api_key
-
-#     def transcribe_audio(self, audio_url: str) -> str:
-#         # Implement your Whisper ASR code here
-#         pass
-
 
 def transcribe_audio(audio_f):
     """
@@ -67,18 +50,10 @@ def transcribe_audio(audio_f):
     Returns:
         str: The transcribed text.
     """
-    model = whisper.load_model("base")
+    model = whisper.load_model("medium")
     result = model.transcribe(audio_f)
     return result["text"]
 
-
-# class ChatGPTSummary:
-#     def __init__(self, api_key: str):
-#         self.api_key = api_key
-
-#     def generate_summary(self, text: str) -> Tuple[str, str]:
-#         # Implement your ChatGPT summary and important points extraction here
-#         pass
 
 def main():
     """
@@ -121,40 +96,9 @@ def main():
 
     # Load audio file and transcribe to text using the Whisper API
     audio_text = transcribe_audio(audio_file)
-    output = f"Transcript:\n{audio_text}\n\n"
+    output = f"Transcript:\n{audio_text}\n"
     print(output)
-
-    # Transcription
-    # transcription = AudioTranscription()
-    # transcribed_text = transcription.transcribe_audio(audio_url)
-    # print("Transcribed text:", transcribed_text)
-
-    # Analyze audio text using the ChatGPT API
-    # audio_analysis = analyze_text(audio_text)
-
-    # Format output
-    # output = f"Transcript:\n{audio_text}\n\n \
-    #     Analysis:\n{audio_analysis}"
-
-    return output
-
-    # Summary and Important Points Extraction
-    # chatgpt_summary = ChatGPTSummary(OPENAI_API_KEY)
-    # summary, important_points = chatgpt_summary.generate_summary
-    #   (transcribed_text)
-    # print("\nSummary:", summary)
-    # print("\nImportant Points:", important_points)
-
-    # # Load audio file and transcribe to text using the Whisper API
-    # audio_text = transcribe_audio(audio_file)
-
-    # # Analyze audio text using the ChatGPT API
-    # audio_analysis = analyze_text(audio_text)
-
-    # # Format output
-    # output = f"Transcript:\n{audio_text}\n\nAnalysis:\n{audio_analysis}"
-
-    # return output
+    return
 
 
 if __name__ == "__main__":
